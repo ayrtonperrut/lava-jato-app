@@ -5,14 +5,17 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
-public class Veiculo implements Serializable {
+public class VeiculoModel implements Serializable {
 
-    private Long id;
+    @Id
+    private Integer id;
+
     private String placa;
     private String modelo;
     private String marca;
     private int ano;
     private String donoVeiculo;
+
 
     public String getPlaca() {
         return placa;
@@ -54,12 +57,13 @@ public class Veiculo implements Serializable {
         this.donoVeiculo = donoVeiculo;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Id
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
+
 }
