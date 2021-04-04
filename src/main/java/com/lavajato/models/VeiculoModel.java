@@ -1,13 +1,15 @@
 package com.lavajato.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 public class VeiculoModel implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String placa;

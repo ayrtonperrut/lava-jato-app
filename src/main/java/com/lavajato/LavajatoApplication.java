@@ -1,14 +1,25 @@
 package com.lavajato;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.apache.logging.log4j.Logger;
 
 @SpringBootApplication
 public class LavajatoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LavajatoApplication.class, args);
+	private static ApplicationContext context;
+	private static Logger log = LogManager.getLogger(LavajatoApplication.class);
 
+	public static void main(String[] args) {
+		context = SpringApplication.run(LavajatoApplication.class, args);
+
+		//SpringApplication.run(LavajatoApplication.class, args);
+	}
+
+	public static ApplicationContext getContext(){
+		return context;
 	}
 
 }
