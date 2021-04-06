@@ -9,17 +9,9 @@ import org.apache.logging.log4j.Logger;
 @SpringBootApplication
 public class LavajatoApplication {
 
-	private static ApplicationContext context;
-	private static Logger log = LogManager.getLogger(LavajatoApplication.class);
-
 	public static void main(String[] args) {
-		context = SpringApplication.run(LavajatoApplication.class, args);
 
-		//SpringApplication.run(LavajatoApplication.class, args);
-	}
-
-	public static ApplicationContext getContext(){
-		return context;
+		SpringApplication.run(LavajatoApplication.class, args);
 	}
 
 }

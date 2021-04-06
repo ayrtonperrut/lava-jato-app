@@ -12,8 +12,8 @@ import javax.annotation.PostConstruct;
 @Service
 public class VeiculoService {
 
-    @Autowired
-    private VeiculoRepository veiculoRepository;
+//    @Autowired
+//    private VeiculoRepository veiculoRepository;
 
 
     public MensagemResposta cadastrarVeiculo (CadastroVeiculoDTO cadastroVeiculoDTO){
