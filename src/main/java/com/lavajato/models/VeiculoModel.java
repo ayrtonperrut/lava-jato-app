@@ -11,12 +11,21 @@ public class VeiculoModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
+    @Column(name = "placa")
     private String placa;
+
+    @Column(name = "modelo")
     private String modelo;
+
+    @Column(name = "marca")
     private String marca;
+
+    @Column(name = "ano")
     private int ano;
+    @Column(name = "dono_veiculo")
     private String donoVeiculo;
 
 
