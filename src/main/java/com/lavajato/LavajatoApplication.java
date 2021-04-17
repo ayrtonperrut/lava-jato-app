@@ -12,7 +12,6 @@ public class LavajatoApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(LavajatoApplication.class, args);
-		System.out.println("Estou funcionando!");
 	}
 
 }
