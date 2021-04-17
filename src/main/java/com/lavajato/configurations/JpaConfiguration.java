@@ -9,8 +9,8 @@ import org.springframework.dao.annotation.PersistenceExceptionTranslationPostPro
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,31 +27,44 @@ public class JpaConfiguration {
     @Autowired
     private Environment environment;
 
+
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean () {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setDatabase(Database.POSTGRESQL);
-        vendorAdapter.setGenerateDdl(true);
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
-        em.setPackagesToScan("com.lavajato.models");
-        em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(additonalProperties());
+        factoryBean.setJpaVendorAdapter(vendorAdapter);
 
-        return em;
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("postgres");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/lava_jato");
+        dataSource.setDriverClassName("org.postgresql.Driver");
+
+        factoryBean.setDataSource(dataSource);
+
+        Properties props = new Properties();
+        props.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        props.setProperty("hibernate.show_sql", "true");
+        props.setProperty("hibernate.hbm2ddl.auto", "update");
+
+        factoryBean.setJpaProperties(props);
+
+        factoryBean.setPackagesToScan("com.lavajato.models");
+
+        return factoryBean;
     }
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
-        dataSource.setUrl("spring.datasource.url");
-        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
-        dataSource.setPassword("spring.datasource.password");
-
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/lava_jato");
+        dataSource.setUsername( "postgres" );
+        dataSource.setPassword( "postgres" );
         return dataSource;
     }
+
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
@@ -72,6 +85,14 @@ public class JpaConfiguration {
         properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("spring.jpa.hibernate.ddl-auto"));
 
         return properties;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+
+        return transactionManager;
     }
 
 }
