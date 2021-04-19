@@ -10,8 +10,7 @@ import java.io.Serializable;
 public class VeiculoModel implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "placa")
@@ -25,6 +24,7 @@ public class VeiculoModel implements Serializable {
 
     @Column(name = "ano")
     private int ano;
+
     @Column(name = "dono_veiculo")
     private String donoVeiculo;
 
@@ -73,7 +73,6 @@ public class VeiculoModel implements Serializable {
         this.id = id;
     }
 
-    @Id
     public Integer getId() {
         return id;
     }
