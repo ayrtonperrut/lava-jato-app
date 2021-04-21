@@ -6,6 +6,15 @@ public class CadastroVeiculoDTO {
     private String modelo;
     private int ano;
     private String placa;
+    private String donoVeiculo;
+
+    public String getDonoVeiculo() {
+        return donoVeiculo;
+    }
+
+    public void setDonoVeiculo(String donoVeiculo) {
+        this.donoVeiculo = donoVeiculo;
+    }
 
     public String getMarca() {
         return marca;
